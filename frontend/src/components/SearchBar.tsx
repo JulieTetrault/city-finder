@@ -15,7 +15,7 @@ const SearchBar: React.FunctionComponent<SearchBarProps> = (props) => {
     const [query, setQuery] = useState('');
     const [data, setData] = useState<City[]>([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [position, setPosition] = useState<Coordinates | null>(null)
+    const [position, setPosition] = useState<GeolocationCoordinates | null>(null)
 
     const search = async () => {
         setIsLoading(true);

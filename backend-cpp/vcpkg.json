@@ -1,9 +1,0 @@
-{
-    "name": "coveo-review-challenge-backend-cpp",
-    "version": "1.0.0",
-    "dependencies": [
-        { "name": "boost-cmake" },
-        { "name": "cpprestsdk" },
-        { "name": "gtest" }
-    ]
-}

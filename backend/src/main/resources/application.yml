@@ -1,0 +1,22 @@
+server:
+  error:
+    include-message: always
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+
+springdoc:
+  packages-to-scan:
+    - com.coveo.challenge
+  swagger-ui:
+    disable-swagger-default-url: true
+    display-request-duration: true

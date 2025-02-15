@@ -23,3 +23,8 @@ frontend/yarn-debug.log*
 frontend/yarn-error.log*
 .idea
 .vscode
+
+### macOS ###
+# General
+**/.DS_Store
+.DS_Store

@@ -1,0 +1,15 @@
+{
+  "extends": ["config:base"],
+  "packageRules": [
+    {
+      "matchManagers": ["maven"],
+      "matchPackagePatterns": ["*"],
+      "groupName": "Maven Dependencies"
+    },
+    {
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": ["*"],
+      "groupName": "NPM Dependencies"
+    }
+  ]
+}
