@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,52 +12,50 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.coveo.challenge.models.City;
 import com.coveo.challenge.models.PaginatedData;
-import com.coveo.challenge.resources.mappers.PaginatedSuggestionsMapper;
-import com.coveo.challenge.resources.mappers.SuggestionsMapper;
+import com.coveo.challenge.resources.mappers.PaginatedSuggestionsResponseMapper;
+import com.coveo.challenge.resources.mappers.SuggestionsResponseMapper;
 import com.coveo.challenge.resources.responses.PaginatedSuggestionsResponse;
 import com.coveo.challenge.resources.responses.SuggestionsResponse;
-import com.coveo.challenge.services.SuggestionsService;
+import com.coveo.challenge.services.CityService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+@Deprecated
 @RestController
 @RequestMapping("/suggestions")
 @RequiredArgsConstructor
-public class SuggestionsResource
-{
-    private static final String DEFAULT_LATITUDE = "45.9778182";
-    private static final String DEFAULT_LONGITUDE = "-77.8968753";
+public class SuggestionsResource {
+    private final CityService cityService;
+    private final SuggestionsResponseMapper suggestionsResponseMapper;
+    private final PaginatedSuggestionsResponseMapper paginatedSuggestionsResponseMapper;
 
-    private final SuggestionsService suggestionsService;
-    private final SuggestionsMapper suggestionsMapper;
-    private final PaginatedSuggestionsMapper paginatedSuggestionsMapper;
-
-    @CrossOrigin(origins = "*")
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @Deprecated
     @ResponseBody
+    @Operation(summary = "Deprecated: Use /v2/cities instead", deprecated = true)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SuggestionsResponse> getSuggestions(
-            @RequestParam("q") String name,
-            @RequestParam(defaultValue = DEFAULT_LATITUDE) Double latitude,
-            @RequestParam(defaultValue = DEFAULT_LONGITUDE) Double longitude) {
-
-        System.out.println("Entering getSuggestions: q=" + name + ", latitude=" + latitude + ", longitude=" + longitude);
-
-        List<City> cities = suggestionsService.getCities(name, latitude, longitude);
-        return ResponseEntity.ok(suggestionsMapper.toResponse(cities));
+            @RequestParam(value = "q", required = false) String name,
+            @RequestParam(value = "latitude", required = false) Double latitude,
+            @RequestParam(value = "longitude", required = false) Double longitude) {
+        log.warn("Deprecated endpoint /suggestions accessed");
+        List<City> cities = cityService.getCities(name, latitude, longitude);
+        return ResponseEntity.ok(suggestionsResponseMapper.toResponse(cities));
     }
 
-    @CrossOrigin(origins = "*")
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = "page")
+    @Deprecated
     @ResponseBody
+    @Operation(summary = "Deprecated: Use /v2/cities instead", deprecated = true)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = "page")
     public ResponseEntity<PaginatedSuggestionsResponse> getPaginatedSuggestions(
-            @RequestParam("q") String name,
-            @RequestParam(defaultValue = DEFAULT_LATITUDE) Double latitude,
-            @RequestParam(defaultValue = DEFAULT_LONGITUDE) Double longitude,
-            @RequestParam Integer page) {
-
-        System.out.println("Entering getPaginatedSuggestions: q=" + name + ", latitude=" + latitude + ", longitude=" + longitude + ", page=" + page);
-
-        PaginatedData<City> paginatedCities = suggestionsService.getPaginatedCities(name, latitude, longitude, page);
-        return ResponseEntity.ok(paginatedSuggestionsMapper.toResponse(paginatedCities));
+            @RequestParam(value = "q", required = false) String name,
+            @RequestParam(value = "latitude", required = false) Double latitude,
+            @RequestParam(value = "longitude", required = false) Double longitude,
+            @RequestParam(value = "page") int page) {
+        log.warn("Deprecated endpoint /suggestions accessed");
+        PaginatedData<City> paginatedCities = cityService.getPaginatedCities(name, latitude, longitude, page);
+        return ResponseEntity.ok(paginatedSuggestionsResponseMapper.toResponse(paginatedCities));
     }
 }

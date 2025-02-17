@@ -1,6 +1,6 @@
 package com.coveo.challenge.resources.mappers;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -24,8 +24,8 @@ import com.coveo.challenge.testUtils.fixtures.CityResponseFixture;
 import com.coveo.challenge.testUtils.fixtures.PaginatedDataFixture;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("PaginatedSuggestionsMapper")
-public class PaginatedSuggestionsMapperTest {
+@DisplayName("PaginatedSuggestionsResponseMapper")
+public class PaginatedSuggestionsResponseMapperTest {
     private static final City SOME_CITY = new CityFixture().withIdentifier(1).build();
     private static final City SOME_OTHER_CITY = new CityFixture().withIdentifier(2).build();
     private static final CityResponse SOME_CITY_RESPONSE = new CityResponseFixture().withId(1).build();
@@ -35,10 +35,10 @@ public class PaginatedSuggestionsMapperTest {
     private static final List<CityResponse> SOME_CITY_RESPONSES = List.of(SOME_CITY_RESPONSE, SOME_OTHER_CITY_RESPONSE);
 
     @Mock
-    private CityMapper cityMapperMock;
+    private CityResponseMapper cityResponseMapperMock;
 
     @InjectMocks
-    private PaginatedSuggestionsMapper paginatedSuggestionsMapper;
+    private PaginatedSuggestionsResponseMapper paginatedSuggestionsResponseMapper;
 
     @Nested
     @DisplayName("when mapping to response")
@@ -46,23 +46,23 @@ public class PaginatedSuggestionsMapperTest {
 
         @BeforeEach
         void setUp() {
-            when(cityMapperMock.toResponse(SOME_CITY)).thenReturn(SOME_CITY_RESPONSE);
-            when(cityMapperMock.toResponse(SOME_OTHER_CITY)).thenReturn(SOME_OTHER_CITY_RESPONSE);
+            when(cityResponseMapperMock.toResponse(SOME_CITY)).thenReturn(SOME_CITY_RESPONSE);
+            when(cityResponseMapperMock.toResponse(SOME_OTHER_CITY)).thenReturn(SOME_OTHER_CITY_RESPONSE);
         }
 
         @Test
-        @DisplayName("it should call CityMapper for each city")
+        @DisplayName("it should call CityResponseMapper for each city")
         void itShouldCallCityMapperForEachCity() {
-            paginatedSuggestionsMapper.toResponse(SOME_PAGINATED_CITIES);
+            paginatedSuggestionsResponseMapper.toResponse(SOME_PAGINATED_CITIES);
 
-            verify(cityMapperMock).toResponse(SOME_CITY);
-            verify(cityMapperMock).toResponse(SOME_OTHER_CITY);
+            verify(cityResponseMapperMock).toResponse(SOME_CITY);
+            verify(cityResponseMapperMock).toResponse(SOME_OTHER_CITY);
         }
 
         @Test
         @DisplayName("it should return mapped paginated suggestions response")
         void itShouldReturnMappedPaginatedSuggestionsResponse() {
-            PaginatedSuggestionsResponse paginatedSuggestionsResponse = paginatedSuggestionsMapper.toResponse(SOME_PAGINATED_CITIES);
+            PaginatedSuggestionsResponse paginatedSuggestionsResponse = paginatedSuggestionsResponseMapper.toResponse(SOME_PAGINATED_CITIES);
 
             assertThat(paginatedSuggestionsResponse.getPage()).isEqualTo(SOME_PAGINATED_CITIES.getPage());
             assertThat(paginatedSuggestionsResponse.getTotalNumberOfPages()).isEqualTo(SOME_PAGINATED_CITIES.getTotalNumberOfPages());

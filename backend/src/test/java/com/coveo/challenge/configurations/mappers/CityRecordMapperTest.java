@@ -1,6 +1,6 @@
 package com.coveo.challenge.configurations.mappers;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -15,8 +15,8 @@ import java.util.Optional;
 import com.coveo.challenge.models.City;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("CityMapper")
-class CityMapperTest {
+@DisplayName("CityRecordMapper")
+class CityRecordMapperTest {
     private static final String[] VALID_CITY_RECORD_WITH_ELEVATION = {
             "1", "New York", "New York", "NY,Big Apple",
             "40.7128", "-74.0060", "P", "PPL", "US", "cc2",
@@ -37,7 +37,7 @@ class CityMapperTest {
     };
 
     @InjectMocks
-    private CityMapper cityMapper;
+    private CityRecordMapper cityRecordMapper;
 
     @Nested
     @DisplayName("when mapping from valid record with elevation")
@@ -46,7 +46,7 @@ class CityMapperTest {
         @Test
         @DisplayName("it should return mapped city")
         void itShouldReturnMappedCity() {
-            Optional<City> optionalCity = cityMapper.fromRecord(VALID_CITY_RECORD_WITH_ELEVATION);
+            Optional<City> optionalCity = cityRecordMapper.fromRecord(VALID_CITY_RECORD_WITH_ELEVATION);
 
             assertThat(optionalCity).isPresent();
             City city = optionalCity.get();
@@ -79,7 +79,7 @@ class CityMapperTest {
         @Test
         @DisplayName("it should return mapped city with default elevation")
         void itShouldReturnMappedCityWithDefaultElevation() {
-            Optional<City> optionalCity = cityMapper.fromRecord(VALID_CITY_RECORD_WITHOUT_ELEVATION);
+            Optional<City> optionalCity = cityRecordMapper.fromRecord(VALID_CITY_RECORD_WITHOUT_ELEVATION);
 
             assertThat(optionalCity).isPresent();
             City city = optionalCity.get();
@@ -112,7 +112,7 @@ class CityMapperTest {
         @Test
         @DisplayName("it should return empty value")
         void itShouldReturnEmptyValue() {
-            Optional<City> optionalCity = cityMapper.fromRecord(INVALID_CITY_RECORD);
+            Optional<City> optionalCity = cityRecordMapper.fromRecord(INVALID_CITY_RECORD);
 
             assertThat(optionalCity).isEmpty();
         }

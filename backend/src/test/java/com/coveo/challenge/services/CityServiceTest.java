@@ -1,6 +1,6 @@
 package com.coveo.challenge.services;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -22,8 +22,8 @@ import com.coveo.challenge.testUtils.fixtures.CityFixture;
 import com.coveo.challenge.testUtils.fixtures.PaginatedDataFixture;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("SuggestionsService")
-public class SuggestionsServiceTest {
+@DisplayName("CityService")
+public class CityServiceTest {
     private static final String SOME_NAME = "name";
     private static final double SOME_LATITUDE = 10;
     private static final double SOME_LONGITUDE = 20;
@@ -35,7 +35,7 @@ public class SuggestionsServiceTest {
     private CityRepository cityRepositoryMock;
 
     @InjectMocks
-    private SuggestionsService suggestionsService;
+    private CityService cityService;
 
     @Nested
     @DisplayName("when getting cities")
@@ -49,7 +49,7 @@ public class SuggestionsServiceTest {
         @Test
         @DisplayName("it should call CityRepository")
         void itShouldCallCityRepository() {
-            suggestionsService.getCities(SOME_NAME, SOME_LATITUDE, SOME_LONGITUDE);
+            cityService.getCities(SOME_NAME, SOME_LATITUDE, SOME_LONGITUDE);
 
             verify(cityRepositoryMock).findAllBy(SOME_NAME, SOME_LATITUDE, SOME_LONGITUDE);
         }
@@ -57,7 +57,7 @@ public class SuggestionsServiceTest {
         @Test
         @DisplayName("it should return cities")
         void itShouldReturnCities() {
-            List<City> cities = suggestionsService.getCities(SOME_NAME, SOME_LATITUDE, SOME_LONGITUDE);
+            List<City> cities = cityService.getCities(SOME_NAME, SOME_LATITUDE, SOME_LONGITUDE);
 
             assertThat(cities).isEqualTo(SOME_CITIES);
         }
@@ -75,7 +75,7 @@ public class SuggestionsServiceTest {
         @Test
         @DisplayName("it should call CityRepository")
         void itShouldCallCityRepository() {
-            suggestionsService.getPaginatedCities(SOME_NAME, SOME_LATITUDE, SOME_LONGITUDE, SOME_PAGE);
+            cityService.getPaginatedCities(SOME_NAME, SOME_LATITUDE, SOME_LONGITUDE, SOME_PAGE);
 
             verify(cityRepositoryMock).findPageBy(SOME_NAME, SOME_LATITUDE, SOME_LONGITUDE, SOME_PAGE);
         }
@@ -83,7 +83,7 @@ public class SuggestionsServiceTest {
         @Test
         @DisplayName("it should return paginated cities")
         void itShouldReturnCities() {
-            PaginatedData<City> paginatedCities = suggestionsService.getPaginatedCities(SOME_NAME, SOME_LATITUDE, SOME_LONGITUDE, SOME_PAGE);
+            PaginatedData<City> paginatedCities = cityService.getPaginatedCities(SOME_NAME, SOME_LATITUDE, SOME_LONGITUDE, SOME_PAGE);
 
             assertThat(paginatedCities).isEqualTo(SOME_PAGINATED_CITIES);
         }

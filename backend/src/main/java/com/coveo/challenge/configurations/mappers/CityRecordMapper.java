@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import com.coveo.challenge.models.City;
 
 @Component
-public class CityMapper {
+public class CityRecordMapper {
     private static final long DEFAULT_ELEVATION = -1L;
 
     public Optional<City> fromRecord(String[] record) {

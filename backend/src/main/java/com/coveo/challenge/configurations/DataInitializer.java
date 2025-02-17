@@ -7,10 +7,10 @@ import java.util.Optional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.coveo.challenge.configurations.mappers.CityMapper;
+import com.coveo.challenge.configurations.mappers.CityRecordMapper;
 import com.coveo.challenge.repositories.CityRepository;
-import com.coveo.challenge.utils.TsvParser;
 import com.coveo.challenge.utils.FileReader;
+import com.coveo.challenge.utils.TsvParser;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class DataInitializer implements CommandLineRunner {
 
-    private final CityMapper cityMapper;
+    private final CityRecordMapper cityMapper;
     private final FileReader fileLoader;
     private final CityRepository cityRepository;
 

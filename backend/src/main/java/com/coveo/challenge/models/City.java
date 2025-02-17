@@ -11,8 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class City
-{
+public class City {
     private long identifier;
     private String name;
     private String ascii;

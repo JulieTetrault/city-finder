@@ -1,14 +1,8 @@
 import * as React from 'react'
 import cityImg from '../city.png'
+import { SearchedCity } from "../models/searchedCity";
 
-export interface City {
-    id: number,
-    ascii: string,
-    name: string
-}
-
-
-export const ResultList: React.FunctionComponent<{ cities: City[] }> = ({ cities }) => {
+export const ResultList: React.FunctionComponent<{ cities: SearchedCity[] }> = ({ cities }) => {
     return <div className="ResultList">
         <ol>
             {cities.map((c) => <li key={c.id}>

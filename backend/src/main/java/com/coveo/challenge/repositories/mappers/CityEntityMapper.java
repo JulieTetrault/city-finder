@@ -6,33 +6,7 @@ import com.coveo.challenge.models.City;
 import com.coveo.challenge.repositories.entities.CityEntity;
 
 @Component
-public class CityMapper {
-    public City fromEntity(CityEntity cityEntity) {
-        City city = new City();
-
-        city.setIdentifier(cityEntity.getIdentifier());
-        city.setName(cityEntity.getName());
-        city.setAscii(cityEntity.getAscii());
-        city.setAltNames(cityEntity.getAltNames());
-        city.setLatitude(cityEntity.getLatitude());
-        city.setLongitude(cityEntity.getLongitude());
-        city.setFeatClass(cityEntity.getFeatClass());
-        city.setFeatCode(cityEntity.getFeatCode());
-        city.setCountry(cityEntity.getCountry());
-        city.setCc2(cityEntity.getCc2());
-        city.setAdmin1(cityEntity.getAdmin1());
-        city.setAdmin2(cityEntity.getAdmin2());
-        city.setAdmin3(cityEntity.getAdmin3());
-        city.setAdmin4(cityEntity.getAdmin4());
-        city.setPopulation(cityEntity.getPopulation());
-        city.setElevation(cityEntity.getElevation());
-        city.setDem(cityEntity.getDem());
-        city.setTimeZone(cityEntity.getTimeZone());
-        city.setModifiedAt(cityEntity.getModifiedAt());
-
-        return city;
-    }
-
+public class CityEntityMapper {
     public CityEntity toEntity(City city) {
         CityEntity cityEntity = new CityEntity();
 
@@ -57,5 +31,31 @@ public class CityMapper {
         cityEntity.setModifiedAt(city.getModifiedAt());
 
         return cityEntity;
+    }
+
+    public City fromEntity(CityEntity cityEntity) {
+        City city = new City();
+
+        city.setIdentifier(cityEntity.getIdentifier());
+        city.setName(cityEntity.getName());
+        city.setAscii(cityEntity.getAscii());
+        city.setAltNames(cityEntity.getAltNames());
+        city.setLatitude(cityEntity.getLatitude());
+        city.setLongitude(cityEntity.getLongitude());
+        city.setFeatClass(cityEntity.getFeatClass());
+        city.setFeatCode(cityEntity.getFeatCode());
+        city.setCountry(cityEntity.getCountry());
+        city.setCc2(cityEntity.getCc2());
+        city.setAdmin1(cityEntity.getAdmin1());
+        city.setAdmin2(cityEntity.getAdmin2());
+        city.setAdmin3(cityEntity.getAdmin3());
+        city.setAdmin4(cityEntity.getAdmin4());
+        city.setPopulation(cityEntity.getPopulation());
+        city.setElevation(cityEntity.getElevation());
+        city.setDem(cityEntity.getDem());
+        city.setTimeZone(cityEntity.getTimeZone());
+        city.setModifiedAt(cityEntity.getModifiedAt());
+
+        return city;
     }
 }

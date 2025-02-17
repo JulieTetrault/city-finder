@@ -13,15 +13,15 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class PaginatedCityMapper {
-    private final CityMapper cityMapper;
+public class PaginatedCityEntityMapper {
+    private final CityEntityMapper cityEntityMapper;
 
-    public PaginatedData<City> fromEntity(Page<CityEntity> paginatedEntity) {
+    public PaginatedData<City> fromEntity(Page<CityEntity> paginatedCityEntity) {
         PaginatedData<City> paginatedData = new PaginatedData<>();
 
-        paginatedData.setPage(paginatedEntity.getNumber());
-        paginatedData.setTotalNumberOfPages(paginatedEntity.getTotalPages());
-        paginatedData.setData(paginatedEntity.get().map(cityMapper::fromEntity).collect(Collectors.toList()));
+        paginatedData.setPage(paginatedCityEntity.getNumber());
+        paginatedData.setTotalNumberOfPages(paginatedCityEntity.getTotalPages());
+        paginatedData.setData(paginatedCityEntity.get().map(cityEntityMapper::fromEntity).collect(Collectors.toList()));
 
         return paginatedData;
     }

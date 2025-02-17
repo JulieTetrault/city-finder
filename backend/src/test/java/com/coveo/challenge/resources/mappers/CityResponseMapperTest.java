@@ -1,6 +1,6 @@
 package com.coveo.challenge.resources.mappers;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -14,12 +14,12 @@ import com.coveo.challenge.resources.responses.CityResponse;
 import com.coveo.challenge.testUtils.fixtures.CityFixture;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("CityMapper")
-public class CityMapperTest {
+@DisplayName("CityResponseMapper")
+public class CityResponseMapperTest {
     private static final City SOME_CITY = new CityFixture().build();
 
     @InjectMocks
-    private CityMapper cityMapper;
+    private CityResponseMapper cityResponseMapper;
 
     @Nested
     @DisplayName("when mapping to response")
@@ -28,16 +28,16 @@ public class CityMapperTest {
         @Test
         @DisplayName("it should return mapped city response")
         void itShouldReturnMappedCityResponse() {
-            CityResponse cityResponse = cityMapper.toResponse(SOME_CITY);
+            CityResponse cityResponse = cityResponseMapper.toResponse(SOME_CITY);
 
             assertThat(cityResponse.getId()).isEqualTo(SOME_CITY.getIdentifier());
             assertThat(cityResponse.getName()).isEqualTo(SOME_CITY.getName());
             assertThat(cityResponse.getAscii()).isEqualTo(SOME_CITY.getAscii());
-            assertThat(cityResponse.getAlt_name()).isEqualTo(String.join(",",SOME_CITY.getAltNames()));
+            assertThat(cityResponse.getAltName()).isEqualTo(String.join(",",SOME_CITY.getAltNames()));
             assertThat(cityResponse.getLatitude()).isEqualTo((float)SOME_CITY.getLatitude());
             assertThat(cityResponse.getLongitude()).isEqualTo((float)SOME_CITY.getLongitude());
-            assertThat(cityResponse.getFeat_class()).isEqualTo(SOME_CITY.getFeatClass());
-            assertThat(cityResponse.getFeat_code()).isEqualTo(SOME_CITY.getFeatCode());
+            assertThat(cityResponse.getFeatClass()).isEqualTo(SOME_CITY.getFeatClass());
+            assertThat(cityResponse.getFeatCode()).isEqualTo(SOME_CITY.getFeatCode());
             assertThat(cityResponse.getCountry()).isEqualTo(SOME_CITY.getCountry());
             assertThat(cityResponse.getAdmin1()).isEqualTo(SOME_CITY.getAdmin1());
             assertThat(cityResponse.getAdmin2()).isEqualTo(SOME_CITY.getAdmin2());
@@ -48,7 +48,7 @@ public class CityMapperTest {
             assertThat(cityResponse.getCc2()).isEqualTo(SOME_CITY.getCc2());
             assertThat(cityResponse.getDem()).isEqualTo(SOME_CITY.getDem());
             assertThat(cityResponse.getTz()).isEqualTo(SOME_CITY.getTimeZone());
-            assertThat(cityResponse.getModified_at()).isEqualTo(SOME_CITY.getModifiedAt());
+            assertThat(cityResponse.getModifiedAt()).isEqualTo(SOME_CITY.getModifiedAt());
         }
     }
 }

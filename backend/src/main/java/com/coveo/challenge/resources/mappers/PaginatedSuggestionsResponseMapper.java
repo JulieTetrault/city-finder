@@ -12,12 +12,13 @@ import com.coveo.challenge.resources.responses.PaginatedSuggestionsResponse;
 import lombok.RequiredArgsConstructor;
 
 @Component
+@Deprecated
 @RequiredArgsConstructor
-public class PaginatedSuggestionsMapper {
-    private final CityMapper cityMapper;
+public class PaginatedSuggestionsResponseMapper {
+    private final CityResponseMapper cityResponseMapper;
 
     public PaginatedSuggestionsResponse toResponse(PaginatedData<City> paginatedCities) {
-        List<CityResponse> cityResponses = paginatedCities.getData().stream().map(cityMapper::toResponse).toList();
+        List<CityResponse> cityResponses = paginatedCities.getData().stream().map(cityResponseMapper::toResponse).toList();
 
         return PaginatedSuggestionsResponse.builder()
                 .page(paginatedCities.getPage())

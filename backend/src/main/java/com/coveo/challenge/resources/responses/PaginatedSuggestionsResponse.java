@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@Deprecated
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaginatedSuggestionsResponse {

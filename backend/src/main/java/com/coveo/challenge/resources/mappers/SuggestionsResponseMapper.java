@@ -11,12 +11,13 @@ import com.coveo.challenge.resources.responses.SuggestionsResponse;
 import lombok.RequiredArgsConstructor;
 
 @Component
+@Deprecated
 @RequiredArgsConstructor
-public class SuggestionsMapper {
-    private final CityMapper cityMapper;
+public class SuggestionsResponseMapper {
+    private final CityResponseMapper cityResponseMapper;
 
     public SuggestionsResponse toResponse(List<City> cities) {
-        List<CityResponse> cityResponses = cities.stream().map(cityMapper::toResponse).toList();
+        List<CityResponse> cityResponses = cities.stream().map(cityResponseMapper::toResponse).toList();
 
         return SuggestionsResponse.builder().cities(cityResponses).build();
     }

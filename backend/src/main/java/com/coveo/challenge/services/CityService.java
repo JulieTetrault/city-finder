@@ -12,17 +12,18 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class SuggestionsService {
-
+public class CityService {
     private final CityRepository cityRepository;
 
-    public List<City> getCities(String name, Double latitude, Double longitude)
-    {
+    public City getCity(long id) {
+        return cityRepository.getById(id);
+    }
+
+    public List<City> getCities(String name, Double latitude, Double longitude) {
         return cityRepository.findAllBy(name, latitude, longitude);
     }
 
-    public PaginatedData<City> getPaginatedCities(String name, Double latitude, Double longitude, Integer page)
-    {
+    public PaginatedData<City> getPaginatedCities(String name, Double latitude, Double longitude, Integer page) {
         return cityRepository.findPageBy(name, latitude, longitude, page);
     }
 }

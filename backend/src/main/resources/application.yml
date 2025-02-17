@@ -14,9 +14,36 @@ logging:
       springframework:
         web: DEBUG
 
+spring:
+  datasource:
+    url: jdbc:h2:mem:challenge
+    driverClassName: org.h2.Driver
+    username: coveo
+    password: coveo
+  jackson:
+    default-property-inclusion: NON_NULL
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+  profiles:
+    active: local
+
 springdoc:
   packages-to-scan:
     - com.coveo.challenge
   swagger-ui:
     disable-swagger-default-url: true
     display-request-duration: true
+
+coveo:
+  service:
+    challenge:
+      security:
+        allowedOrigins: "http://localhost:3000"
+      geolocation:
+        defaultLatitude: "45.9778182"
+        defaultLongitude: "-77.8968753"
+        latitudeRange: "10"
+        longitudeRange: "20"

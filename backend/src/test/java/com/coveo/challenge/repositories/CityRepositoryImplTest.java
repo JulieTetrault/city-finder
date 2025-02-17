@@ -1,7 +1,7 @@
 package com.coveo.challenge.repositories;
 
 import static com.coveo.challenge.repositories.CityRepositoryImpl.PAGE_SIZE;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -19,12 +19,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 import com.coveo.challenge.models.City;
 import com.coveo.challenge.models.PaginatedData;
 import com.coveo.challenge.repositories.entities.CityEntity;
-import com.coveo.challenge.repositories.mappers.CityMapper;
-import com.coveo.challenge.repositories.mappers.PaginatedCityMapper;
+import com.coveo.challenge.repositories.mappers.CityEntityMapper;
+import com.coveo.challenge.repositories.mappers.PaginatedCityEntityMapper;
+import com.coveo.challenge.repositories.specifications.CitySpecificationBuilder;
 import com.coveo.challenge.testUtils.fixtures.CityEntityFixture;
 import com.coveo.challenge.testUtils.fixtures.CityFixture;
 import com.coveo.challenge.testUtils.fixtures.PaginatedDataFixture;
@@ -47,13 +49,19 @@ public class CityRepositoryImplTest {
     private static final PaginatedData<City> SOME_PAGINATED_CITIES = new PaginatedDataFixture<City>().withData(SOME_CITIES).build();
 
     @Mock
-    private CityMapper cityMapperMock;
+    private CityEntityMapper cityEntityMapperMock;
 
     @Mock
-    private PaginatedCityMapper paginatedCityMapperMock;
+    private PaginatedCityEntityMapper paginatedCityMapperMock;
 
     @Mock
     private CityEntityRepository cityEntityRepositoryMock;
+
+    @Mock
+    private CitySpecificationBuilder citySpecificationBuilderMock;
+
+    @Mock
+    private Specification<CityEntity> citySpecificationMock;
 
     @InjectMocks
     private CityRepositoryImpl cityRepository;
@@ -62,11 +70,13 @@ public class CityRepositoryImplTest {
     @DisplayName("when finding all cities by filters")
     class WhenFindingAllCities {
 
+
         @BeforeEach
         void setUp() {
-            when(cityEntityRepositoryMock.findByFilters(SOME_NAME, SOME_LATITUDE, SOME_LONGITUDE)).thenReturn(SOME_CITY_ENTITIES);
-            when(cityMapperMock.fromEntity(SOME_CITY_ENTITY)).thenReturn(SOME_CITY);
-            when(cityMapperMock.fromEntity(SOME_OTHER_CITY_ENTITY)).thenReturn(SOME_OTHER_CITY);
+            when(citySpecificationBuilderMock.build(SOME_NAME, SOME_LATITUDE, SOME_LONGITUDE)).thenReturn(citySpecificationMock);
+            when(cityEntityRepositoryMock.findAll(citySpecificationMock)).thenReturn(SOME_CITY_ENTITIES);
+            when(cityEntityMapperMock.fromEntity(SOME_CITY_ENTITY)).thenReturn(SOME_CITY);
+            when(cityEntityMapperMock.fromEntity(SOME_OTHER_CITY_ENTITY)).thenReturn(SOME_OTHER_CITY);
         }
 
         @Test
@@ -74,7 +84,7 @@ public class CityRepositoryImplTest {
         void itShouldCallCityEntityRepository() {
             cityRepository.findAllBy(SOME_NAME, SOME_LATITUDE, SOME_LONGITUDE);
 
-            verify(cityEntityRepositoryMock).findByFilters(SOME_NAME, SOME_LATITUDE, SOME_LONGITUDE);
+            verify(cityEntityRepositoryMock).findAll(citySpecificationMock);
         }
 
         @Test
@@ -82,8 +92,8 @@ public class CityRepositoryImplTest {
         void itShouldCallCityMapperForEachCityEntity() {
             cityRepository.findAllBy(SOME_NAME, SOME_LATITUDE, SOME_LONGITUDE);
 
-            verify(cityMapperMock).fromEntity(SOME_CITY_ENTITY);
-            verify(cityMapperMock).fromEntity(SOME_OTHER_CITY_ENTITY);
+            verify(cityEntityMapperMock).fromEntity(SOME_CITY_ENTITY);
+            verify(cityEntityMapperMock).fromEntity(SOME_OTHER_CITY_ENTITY);
         }
 
         @Test
@@ -101,7 +111,8 @@ public class CityRepositoryImplTest {
 
         @BeforeEach
         void setUp() {
-            when(cityEntityRepositoryMock.findPageByFilters(SOME_NAME, SOME_LATITUDE, SOME_LONGITUDE, SOME_PAGE_REQUEST)).thenReturn(SOME_PAGINATED_CITY_ENTITIES);
+            when(citySpecificationBuilderMock.build(SOME_NAME, SOME_LATITUDE, SOME_LONGITUDE)).thenReturn(citySpecificationMock);
+            when(cityEntityRepositoryMock.findAll(citySpecificationMock, SOME_PAGE_REQUEST)).thenReturn(SOME_PAGINATED_CITY_ENTITIES);
             when(paginatedCityMapperMock.fromEntity(SOME_PAGINATED_CITY_ENTITIES)).thenReturn(SOME_PAGINATED_CITIES);
         }
 
@@ -110,7 +121,7 @@ public class CityRepositoryImplTest {
         void itShouldCallCityEntityRepository() {
             cityRepository.findPageBy(SOME_NAME, SOME_LATITUDE, SOME_LONGITUDE, SOME_PAGE);
 
-            verify(cityEntityRepositoryMock).findPageByFilters(SOME_NAME, SOME_LATITUDE, SOME_LONGITUDE, SOME_PAGE_REQUEST);
+            verify(cityEntityRepositoryMock).findAll(citySpecificationMock, SOME_PAGE_REQUEST);
         }
 
         @Test
@@ -136,8 +147,8 @@ public class CityRepositoryImplTest {
 
         @BeforeEach
         void setUp() {
-            when(cityMapperMock.toEntity(SOME_CITY)).thenReturn(SOME_CITY_ENTITY);
-            when(cityMapperMock.toEntity(SOME_OTHER_CITY)).thenReturn(SOME_OTHER_CITY_ENTITY);
+            when(cityEntityMapperMock.toEntity(SOME_CITY)).thenReturn(SOME_CITY_ENTITY);
+            when(cityEntityMapperMock.toEntity(SOME_OTHER_CITY)).thenReturn(SOME_OTHER_CITY_ENTITY);
         }
 
         @Test
@@ -145,8 +156,8 @@ public class CityRepositoryImplTest {
         void itShouldCallCityMapperForEachCity() {
             cityRepository.saveAll(SOME_CITIES);
 
-            verify(cityMapperMock).toEntity(SOME_CITY);
-            verify(cityMapperMock).toEntity(SOME_OTHER_CITY);
+            verify(cityEntityMapperMock).toEntity(SOME_CITY);
+            verify(cityEntityMapperMock).toEntity(SOME_OTHER_CITY);
         }
 
         @Test

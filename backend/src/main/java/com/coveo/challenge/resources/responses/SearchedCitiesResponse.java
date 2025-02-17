@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@Deprecated
 @NoArgsConstructor
 @AllArgsConstructor
-public class SuggestionsResponse {
-    private List<CityResponse> cities;
+public class SearchedCitiesResponse {
+    private List<SearchedCityResponse> cities;
 }

@@ -22,6 +22,7 @@ Start the application with:
 ```
 
 You can then access the swagger UI at `http://localhost:8080/swagger-ui.html`.
+You can also access the H2 console at `http://localhost:8080/h2-console`.
 
 ### Tests
 

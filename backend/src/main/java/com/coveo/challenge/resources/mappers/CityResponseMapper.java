@@ -6,18 +6,18 @@ import com.coveo.challenge.models.City;
 import com.coveo.challenge.resources.responses.CityResponse;
 
 @Component
-public class CityMapper {
+public class CityResponseMapper {
     public CityResponse toResponse(City city) {
         CityResponse cityResponse = new CityResponse();
 
         cityResponse.setId(city.getIdentifier());
         cityResponse.setName(city.getName());
         cityResponse.setAscii(city.getAscii());
-        cityResponse.setAlt_name(String.join(",", city.getAltNames()));
-        cityResponse.setLatitude((float)city.getLatitude());
-        cityResponse.setLongitude((float)city.getLongitude());
-        cityResponse.setFeat_class(city.getFeatClass());
-        cityResponse.setFeat_code(city.getFeatCode());
+        cityResponse.setAltName(String.join(",", city.getAltNames()));
+        cityResponse.setLatitude((float) city.getLatitude());
+        cityResponse.setLongitude((float) city.getLongitude());
+        cityResponse.setFeatClass(city.getFeatClass());
+        cityResponse.setFeatCode(city.getFeatCode());
         cityResponse.setCountry(city.getCountry());
         cityResponse.setCc2(city.getCc2());
         cityResponse.setAdmin1(city.getAdmin1());
@@ -28,7 +28,7 @@ public class CityMapper {
         cityResponse.setElevation(city.getElevation());
         cityResponse.setDem(city.getDem());
         cityResponse.setTz(city.getTimeZone());
-        cityResponse.setModified_at(city.getModifiedAt());
+        cityResponse.setModifiedAt(city.getModifiedAt());
 
         return cityResponse;
     }

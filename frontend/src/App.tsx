@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import './App.css';
 import SearchBar from './components/SearchBar';
-import { City, ResultList } from './components/ResultList';
+import { SearchedCity } from "./models/searchedCity";
+import { ResultList } from "./components/ResultList";
 
 const App: React.FunctionComponent = () => {
-  const [cities, setCities] = useState<City[]>([]);
+  const [cities, setCities] = useState<SearchedCity[]>([]);
 
   return (
     <div className="App">

@@ -1,6 +1,6 @@
 package com.coveo.challenge.repositories.mappers;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -25,8 +25,8 @@ import com.coveo.challenge.testUtils.fixtures.CityEntityFixture;
 import com.coveo.challenge.testUtils.fixtures.CityFixture;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("PaginatedCityMapper")
-public class PaginatedCityMapperTest {
+@DisplayName("PaginatedCityEntityMapper")
+public class PaginatedCityEntityMapperTest {
     private static final int SOME_PAGE = 1;
     private static final int SOME_PAGE_SIZE = 3;
     private static final CityEntity SOME_CITY_ENTITY = new CityEntityFixture().withIdentifier(1).build();
@@ -38,10 +38,10 @@ public class PaginatedCityMapperTest {
     private static final Page<CityEntity> SOME_PAGINATED_CITY_ENTITIES = new PageImpl<>(SOME_CITY_ENTITIES, PageRequest.of(SOME_PAGE, SOME_PAGE_SIZE), SOME_CITY_ENTITIES.size());
 
     @Mock
-    private CityMapper cityMapperMock;
+    private CityEntityMapper cityEntityMapperMock;
 
     @InjectMocks
-    private PaginatedCityMapper paginatedCityMapper;
+    private PaginatedCityEntityMapper paginatedCityEntityMapper;
 
     @Nested
     @DisplayName("when mapping from entity")
@@ -49,23 +49,23 @@ public class PaginatedCityMapperTest {
 
         @BeforeEach
         void setUp() {
-            when(cityMapperMock.fromEntity(SOME_CITY_ENTITY)).thenReturn(SOME_CITY);
-            when(cityMapperMock.fromEntity(SOME_OTHER_CITY_ENTITY)).thenReturn(SOME_OTHER_CITY);
+            when(cityEntityMapperMock.fromEntity(SOME_CITY_ENTITY)).thenReturn(SOME_CITY);
+            when(cityEntityMapperMock.fromEntity(SOME_OTHER_CITY_ENTITY)).thenReturn(SOME_OTHER_CITY);
         }
 
         @Test
         @DisplayName("it should call CityMapper for each city entity")
         void itShouldCallCityMapperForEachCityEntity() {
-             paginatedCityMapper.fromEntity(SOME_PAGINATED_CITY_ENTITIES);
+             paginatedCityEntityMapper.fromEntity(SOME_PAGINATED_CITY_ENTITIES);
 
-            verify(cityMapperMock).fromEntity(SOME_CITY_ENTITY);
-            verify(cityMapperMock).fromEntity(SOME_OTHER_CITY_ENTITY);
+            verify(cityEntityMapperMock).fromEntity(SOME_CITY_ENTITY);
+            verify(cityEntityMapperMock).fromEntity(SOME_OTHER_CITY_ENTITY);
         }
 
         @Test
         @DisplayName("it should return mapped paginated cities")
         void itShouldReturnMappedPaginatedCities() {
-            PaginatedData<City> paginatedCities = paginatedCityMapper.fromEntity(SOME_PAGINATED_CITY_ENTITIES);
+            PaginatedData<City> paginatedCities = paginatedCityEntityMapper.fromEntity(SOME_PAGINATED_CITY_ENTITIES);
 
             assertThat(paginatedCities.getPage()).isEqualTo(SOME_PAGINATED_CITY_ENTITIES.getNumber());
             assertThat(paginatedCities.getTotalNumberOfPages()).isEqualTo(SOME_PAGINATED_CITY_ENTITIES.getTotalPages());
